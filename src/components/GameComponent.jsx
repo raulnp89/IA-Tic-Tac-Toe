@@ -62,8 +62,8 @@ function minimax(squares, depth, isMaximizingPlayer) {
     return best;
   }
 }
-
 function findBestMove(squares) {
+  // Ajusta la probabilidad de movimiento aleatorio
   if (Math.random() < 0.1) {
     let availableMoves = squares
       .map((square, index) => (square === null ? index : null))
@@ -78,11 +78,15 @@ function findBestMove(squares) {
     if (squares[i] === null) {
       squares[i] = "O";
 
-      let moveVal = minimax(squares, 0, false);
+      // Ajusta el nivel de profundidad en el algoritmo Minimax
+      let moveVal = minimax(squares, 0, false, 8); // Puedes probar con diferentes valores
+
+      // Introduce algún factor de aleatoriedad en la evaluación de los movimientos
+      moveVal += Math.random() * 0.001; // Puedes ajustar el factor de aleatoriedad
 
       squares[i] = null;
 
-      if (moveVal > bestVal) {
+      if (moveVal > bestVal || (moveVal === bestVal && Math.random() < 0.5)) {
         bestMove = i;
         bestVal = moveVal;
       }
